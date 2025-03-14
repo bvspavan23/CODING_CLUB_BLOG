@@ -11,8 +11,9 @@ const cloudinary=require("cloudinary").v2
 const errorHandler = require("./middlewares/errHandler");
 const app=express();
 const PORT = process.env.PORT || 8000;
+const URL=process.env.MONGO_URL
 mongoose
-  .connect("mongodb+srv://bvspavan234:rxzCitaj9vIRsup5@botpapi.ejgopwy.mongodb.net/BOT")
+  .connect(URL)
   .then(() => console.log("DB Connected"))
   .catch((e) => console.log(e));
 
@@ -33,7 +34,6 @@ mongoose
   app.use(cors(corsOptions));
   
 
-app.use(cors(corsOptions));
   app.use(express.json());
 
   app.use("/",adminRouter);
