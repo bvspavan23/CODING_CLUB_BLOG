@@ -31,19 +31,19 @@ const Navbar = () => {
                 }`}
             >
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
-                    <Link to="/" onClick={closeNav}>Home</Link>
+                    <Link to="/" className="block w-full h-full">Home</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
-                    <Link to="/about" onClick={closeNav}>About Us</Link>
+                    <Link to="/about" className="block w-full h-full">About Us</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
-                    <Link to="/events" onClick={closeNav}>Events</Link>
+                    <Link to="/events" className="block w-full h-full">Events</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
-                    <Link to="/team" onClick={closeNav}>Team</Link>
+                    <Link to="/team" className="block w-full h-full">Team</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
-                    <Link to="/admin" onClick={closeNav}>Login</Link>
+                    <Link to="/admin" className="block w-full h-full">Login</Link>
                 </li>
             </ul>
         </nav>

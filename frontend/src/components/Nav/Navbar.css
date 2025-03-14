@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 * {
     font-family: "JetBrains Mono", monospace;
 }
 
 .logo-wrapper {
     position: relative;
-    /* width: 5.0rem;
-    height: 15rem; */
     transition: transform 0.5s ease-in-out;
 }
 
@@ -28,6 +27,8 @@
     border-radius: 4px;
     transition: all 0.3s ease-in-out;
     padding-bottom: 5px;
+    display: block; /* Ensure the <li> takes full width */
+    width: 100%; /* Ensure the <li> takes full width */
 }
 
 .bot:hover {
@@ -35,6 +36,16 @@
     color: #fff;
     padding: 5px;
 }
+
+/* Ensure links inside <li> take full width and height */
+.bot a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
 .pavan-papi span:nth-child(2){
     transform: scale(1);
     display: inline-block;
@@ -114,6 +125,7 @@
 .pavan-papi span:nth-child(10):hover {
     transform: scale(1.5);
 }
+
 .pavan-papi span:nth-child(11){
     transform: scale(1);
     display: inline-block;
@@ -123,6 +135,7 @@
 .pavan-papi span:nth-child(11):hover {
     transform: scale(1.5);
 }
+
 .pavan-papi span:nth-child(12){
     transform: scale(1);
     display: inline-block;
