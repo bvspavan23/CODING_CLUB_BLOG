@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.1.5",
+    "@tanstack/react-query-devtools": "^5.67.3",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "formik": "^2.4.6",
