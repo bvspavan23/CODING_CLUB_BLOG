@@ -25,28 +25,28 @@ const EventAdder = () => {
   const dispatch = useDispatch();
   const {eventname}=useParams();
 
-  // const mutation = useMutation({
-  //   mutationFn: EventAPI,
-  //   mutationKey: ["addeve"],
-  // });
+  const mutation = useMutation({
+    mutationFn: EventAPI,
+    mutationKey: ["addeve"],
+  });
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     Jntuno: "",
-  //     studentname: "",
-  //     eligibility: "",
-  //     branch: "",
-  //   },
-  //   validationSchema,
-  //   onSubmit: (values) => {
-  //     mutation
-  //       .mutateAsync(values)
-  //       .then((data) => {
-  //         dispatch(addeveAction(data));
-  //       })
-  //       .catch((error) => console.error(error));
-  //   },
-  // });
+  const formik = useFormik({
+    initialValues: {
+      Jntuno: "",
+      studentname: "",
+      eligibility: "",
+      branch: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      mutation
+        .mutateAsync(values)
+        .then((data) => {
+          dispatch(addeveAction(data));
+        })
+        .catch((error) => console.error(error));
+    },
+  });
 
   return (
     <form
