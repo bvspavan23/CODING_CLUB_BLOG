@@ -27,8 +27,8 @@
     border-radius: 4px;
     transition: all 0.3s ease-in-out;
     padding-bottom: 5px;
-    display: block; /* Ensure the <li> takes full width */
-    width: 100%; /* Ensure the <li> takes full width */
+    display: block; 
+    /* width: 100%;  */
 }
 
 .bot:hover {
