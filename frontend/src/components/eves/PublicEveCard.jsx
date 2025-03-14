@@ -25,7 +25,7 @@ const PublicEveCard = ({ id:eventid, title:eventname,poster}) => {
             <div className="event-content">
                 <h3>{eventname}</h3>
                 <div className="event-details">
-                    <p><strong>Time:</strong> 10:00 AM - 2:00 PM</p>
+                    <h5>for more information click view details</h5>
                 </div>
                 <div className="event-buttons">
                     <button onClick={showInfo} className="view-details">View Details</button>
