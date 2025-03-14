@@ -39,7 +39,7 @@ const eventSlice = createSlice({
       );
 
       axios
-        .delete(`http://localhost:8000/api/v1/events/${delEvent}`)
+        .delete(`https://cc-blog-backend.onrender.com/api/v1/events/${delEvent}`)
         .then((response) => {
           console.log("Event removed from db", response.data);
         })
@@ -98,7 +98,7 @@ const eventSlice = createSlice({
 
 export const eventlistApi = () => async (dispatch) => {
   try {
-    const response = await axios.get("http://localhost:8000/api/v1/events");
+    const response = await axios.get("https://cc-blog-backend.onrender.com/api/v1/events");
     dispatch(seteveAction(response.data));
   } catch (error) {
     console.log(error);
