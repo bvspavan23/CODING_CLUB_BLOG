@@ -33,9 +33,7 @@ const Eve = ({ id, title, poster }) => {
         <div className="event-content">
           <h3>{title}</h3>
           <div className="event-details">
-            <p>
-              <strong>Time:</strong> 10:00 AM - 2:00 PM
-            </p>
+            <h5>for more information click view details</h5>
           </div>
           <div className="event-buttons">
             <button onClick={handleUpdate} className="update">

@@ -104,11 +104,6 @@ const EventAdder = () => {
           <p className="mt-2 text-sm text-gray-600">Update the details below to modify the event.</p>
         </div>
 
-        {/* Success Message */}
-        {isSuccess && (
-          <AlertMessage type="success" message="Event updated successfully!" />
-        )}
-
         <div className="space-y-6">
           {/* Event ID */}
           <div>
@@ -326,7 +321,10 @@ const EventAdder = () => {
           </button>
         </div>
 
-        {/* Loading and Error Messages */}
+        {/* Alert Messages at the Bottom */}
+        {isSuccess && (
+          <AlertMessage type="success" message="Event updated successfully!" />
+        )}
         {mutation.isLoading && (
           <AlertMessage type="loading" message="Loading, please wait..." />
         )}

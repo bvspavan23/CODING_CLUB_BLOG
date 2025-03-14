@@ -8,7 +8,7 @@ import { logoutAction } from "../../redux/slice/authSlice";
 const PrivateNav = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [isNavOpen, setIsNavOpen] = useState(false); // State to manage navbar visibility
+    const [isNavOpen, setIsNavOpen] = useState(false);
 
     // Handle logout function
     const handleLogout = () => {
@@ -18,7 +18,6 @@ const PrivateNav = () => {
         closeNav(); // Close the navbar after logout
     };
 
-    // Toggle navbar visibility
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
     };
