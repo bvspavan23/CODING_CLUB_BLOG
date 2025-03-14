@@ -18,35 +18,35 @@ const validationSchema = Yup.object({
 });
 const Login = () => {
   //! Mutation here
-  const mutation = useMutation({
-    mutationFn: loginAPI,
-    mutationKey: ["login"],
-  });
-  //! Dispatch
-  const dispatch = useDispatch();
-  //!Handle form using formik
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      // Implementation of form submission
-      mutation
-        .mutateAsync(values)
-        .then((data) => {
-          //Dispatch action from redux
-          dispatch(loginAction(data));
-          // Save the user into localStorage
-          localStorage.setItem("userInfo", JSON.stringify(data));
-        })
-        .catch((e) => 
-          console.log(e));
+  // const mutation = useMutation({
+  //   mutationFn: loginAPI,
+  //   mutationKey: ["login"],
+  // });
+  // //! Dispatch
+  // const dispatch = useDispatch();
+  // //!Handle form using formik
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: "",
+  //     password: "",
+  //   },
+  //   validationSchema,
+  //   onSubmit: (values) => {
+  //     // Implementation of form submission
+  //     mutation
+  //       .mutateAsync(values)
+  //       .then((data) => {
+  //         //Dispatch action from redux
+  //         dispatch(loginAction(data));
+  //         // Save the user into localStorage
+  //         localStorage.setItem("userInfo", JSON.stringify(data));
+  //       })
+  //       .catch((e) => 
+  //         console.log(e));
 
-      //
-    },
-  });
+  //     //
+  //   },
+  // });
 
   return (
     <div className="Login">
