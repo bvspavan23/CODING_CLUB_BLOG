@@ -35,8 +35,7 @@
 }
 
 .poster {
-    width: 100%;
-    max-width: 350px;
+    width: 30%;
     height: 60vh;
     border-radius: 10px;
     border: 2px solid #ffcc00;
