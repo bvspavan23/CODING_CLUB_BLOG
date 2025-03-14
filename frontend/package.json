@@ -29,6 +29,7 @@
     "react-typewriter-effect": "^1.1.0",
     "react-typical": "^0.1.3",
     "redux": "^5.0.1",
+    "typewriter-effect": "^2.21.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
