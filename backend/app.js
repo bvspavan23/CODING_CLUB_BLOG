@@ -22,9 +22,6 @@ mongoose
     cloud_name:process.env.CLOUD_NAME,
     api_secret:process.env.CLOUD_API_SECRET
   })
-
-  const cors = require("cors");
-
   const corsOptions = {
     origin: ["https://cc-blog-frontend-ehr1.onrender.com"], 
     methods: "GET,POST,PUT,DELETE",
