@@ -22,9 +22,16 @@ mongoose
     api_secret:process.env.CLOUD_API_SECRET
   })
 
-const corsOptions = {
-  origin:"*",
-};
+  const cors = require("cors");
+
+  const corsOptions = {
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com"], 
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true, // Enable if using authentication or cookies
+  };
+  
+  app.use(cors(corsOptions));
+  
 
 app.use(cors(corsOptions));
   app.use(express.json());
