@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const PublicEveCard = ({ id:eventid, title:eventname,poster}) => {
     // const details = useSelector(EventList);
     const navigate = useNavigate();
