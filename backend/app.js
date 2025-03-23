@@ -7,6 +7,7 @@ const eventRouter= require("./Routes/AddEventRoute");
 const fetchRouter= require("./Routes/FetchEventRoute");
 const deleteRouter= require("./Routes/DeleteEventRoute");
 const updateRouter= require("./Routes/UpdateEventRoute");
+const eveRegRouter= require("./Routes/EveRegRoute");
 const cloudinary=require("cloudinary").v2
 const errorHandler = require("./middlewares/errHandler");
 const app=express();
@@ -22,11 +23,13 @@ mongoose
     cloud_name:process.env.CLOUD_NAME,
     api_secret:process.env.CLOUD_API_SECRET
   })
+  
   const corsOptions = {
     origin: ["https://cc-blog-frontend-ehr1.onrender.com"], 
     methods: "GET,POST,PUT,DELETE",
     credentials: true, // Enable if using authentication or cookies
   };
+
   
   app.use(cors(corsOptions));
   
@@ -38,6 +41,7 @@ mongoose
   app.use("/",fetchRouter);
   app.use("/",deleteRouter);
   app.use("/",updateRouter);
+  app.use("/",eveRegRouter);
   
   app.use(errorHandler);
 
