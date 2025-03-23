@@ -14,7 +14,16 @@ export const EventAPI = async (formData) => {
   // Return a promise
   return response.data;
 };
+export const registerEventAPI = async (formData) => {
+  const response = await axios.post(`${BASE_URL}/student/reg`, formData,{
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });  
 
+  //Return a promise
+  return response.data
+}
 export const deleteEventAPI = async (id) => {
   const response = await axios.delete(`${BASE_URL}/events/${id}`, {
     headers: {

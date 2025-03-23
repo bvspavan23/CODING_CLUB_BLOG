@@ -5,36 +5,37 @@ import { useMutation } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
 import { SiDatabricks } from "react-icons/si";
 import { useDispatch } from "react-redux";
-import { addeveAction } from "../../redux/slice/eventSlice";
-import { EventAPI } from "../../services/events/eventService";
+import { registerAction } from "../../redux/slice/eventSlice";
+import { registerEventAPI } from "../../services/events/eventService";
 import AlertMessage from "../Alert/AlertMessage";
 import { MdOutlinePeopleOutline } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
-import { useParams } from "react-router-dom";
+
 
 // Validation schema
 const validationSchema = Yup.object({
-  Jntuno: Yup.string().required("Jntu number is required"),
+  jntuno: Yup.string().required("Jntu number is required"),
   studentname: Yup.string().required("Student Name is required"),
-  eligibility: Yup.string().required("Eligibility is required"),
+  studentyear: Yup.string().required("studentyear is required"),
   branch: Yup.string().required("branch is required"),
 });
 
-const EventAdder = () => {
+const Registerator= () => {
   const dispatch = useDispatch();
-  const {eventname}=useParams();
 
   const mutation = useMutation({
-    mutationFn: EventAPI,
-    mutationKey: ["addeve"],
+    mutationFn: registerEventAPI,
+    mutationKey: ["register"],
   });
 
   const formik = useFormik({
     initialValues: {
-      Jntuno: "",
       studentname: "",
-      eligibility: "",
+      studentemail: "",
+      studentmobile: "",
+      jntuno: "",
+      studentyear: "",
       branch: "",
     },
     validationSchema,
@@ -42,7 +43,7 @@ const EventAdder = () => {
       mutation
         .mutateAsync(values)
         .then((data) => {
-          dispatch(addeveAction(data));
+          dispatch(registerAction(data));
         })
         .catch((error) => console.error(error));
     },
@@ -54,7 +55,7 @@ const EventAdder = () => {
       className="max-w-lg mx-auto  bg-white p-6 rounded-lg shadow-lg space-y-6 mt-20"
     >
       <div className="text-center">
-        <h2 className="text-2xl font-semibold text-gray-800">Register for {eventname}</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">Register Event</h2>
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
 
@@ -76,19 +77,72 @@ const EventAdder = () => {
         )}
       </div>
 
+      <div className="flex flex-col">
+        <label htmlFor="studentemail" className="text-gray-700 font-medium">
+          <MdOutlineDriveFileRenameOutline className="inline mr-2 text-blue-500" />
+          Student Email
+        </label>
+        <input
+          type="text"
+          id="studentemail"
+          name="studentemail"
+          placeholder="Enter Your Email"
+          className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3"
+          {...formik.getFieldProps("studentemail")}
+        />
+        {formik.touched.studentemail && formik.errors.studentemail && (
+          <p className="text-sm text-red-600">{formik.errors.studentemail}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <label htmlFor="jntuno" className="text-gray-700 font-medium">
+          <SiDatabricks className="inline mr-2 text-blue-500" />
+          Jntu No
+        </label>
+        <input
+          type="text"
+          id="jntuno"
+          name="jntuno"
+          placeholder="Jntu No"
+          className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3"
+          {...formik.getFieldProps("jntuno")}
+        />
+        {formik.touched.jntuno && formik.errors.jntuno && (
+          <p className="text-sm text-red-600">{formik.errors.jntuno}</p>
+        )}
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="studentmobile" className="text-gray-700 font-medium">
+          <MdOutlineDriveFileRenameOutline className="inline mr-2 text-blue-500" />
+          Contact Number
+        </label>
+        <input
+          type="text"
+          id="studentmobile"
+          name="studentmobile"
+          placeholder="Enter Your Contact Number"
+          className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3"
+          {...formik.getFieldProps("studentmobile")}
+        />
+        {formik.touched.studentmobile && formik.errors.studentmobile && (
+          <p className="text-sm text-red-600">{formik.errors.studentmobile}</p>
+        )}
+      </div>
+
       <div className="space-y-2">
         <label
-          htmlFor="Year"
+          htmlFor="studentyear"
           className="flex gap-2 items-center text-gray-700 font-medium"
         >
           <MdOutlinePeopleOutline className="text-blue-500" />
           <span>Year</span>
         </label>
         <select
-          id="eligibility"
-          name="eligibility"
+          id="studentyear"
+          name="studentyear"
           className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          {...formik.getFieldProps("eligibility")}
+          {...formik.getFieldProps("studentyear")}
         >
           <option value="select">select Your Year</option>
           <option value="1st Year">1st Year</option>
@@ -96,28 +150,11 @@ const EventAdder = () => {
           <option value="3rd Year">3rd Year</option>
           <option value="4th Year">4th Year</option>
         </select>
-        {formik.touched.eligibility && formik.errors.eligibility && (
-          <p className="text-sm text-red-600">{formik.errors.eligibility}</p>
+        {formik.touched.studentyear && formik.errors.studentyear && (
+          <p className="text-sm text-red-600">{formik.errors.studentyear}</p>
         )}
       </div>
 
-      <div className="flex flex-col">
-        <label htmlFor="Jntuno" className="text-gray-700 font-medium">
-          <SiDatabricks className="inline mr-2 text-blue-500" />
-          Jntu No
-        </label>
-        <input
-          type="text"
-          id="Jntuno"
-          name="Jntuno"
-          placeholder="Jntu No"
-          className="w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 py-2 px-3"
-          {...formik.getFieldProps("Jntuno")}
-        />
-        {formik.touched.Jntuno && formik.errors.Jntuno && (
-          <p className="text-sm text-red-600">{formik.errors.Jntuno}</p>
-        )}
-      </div>
       <div className="flex flex-col">
         <label htmlFor="branch" className="text-gray-700 font-medium">
           <SlLocationPin className="inline mr-2 text-blue-500" />
@@ -145,7 +182,7 @@ const EventAdder = () => {
         <AlertMessage type="loading" message="Loading, please wait..." />
       )}
       {mutation.isSuccess && (
-        <AlertMessage type="success" message="Event added successfully!" />
+        <AlertMessage type="success" message="Student Registered successfully!" />
       )}
       {mutation.isError && (
         <AlertMessage
@@ -157,4 +194,4 @@ const EventAdder = () => {
   );
 };
 
-export default EventAdder;
+export default Registerator;
