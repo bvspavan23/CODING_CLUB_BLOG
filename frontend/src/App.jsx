@@ -18,6 +18,7 @@ import EventUpdater from './components/eves/UpdateEve.jsx';
 import { eventlistApi } from './redux/slice/eventSlice.js';
 import Register from './components/eves/Register.jsx';
 import About from './components/About/About.jsx';
+import Regdetails from './components/Studentregs/Regdetails.jsx';
 function App(){
   
   const dispatch = useDispatch();
@@ -61,6 +62,14 @@ function App(){
           element={
             <AuthRoute>
               <EventUpdater/>
+            </AuthRoute>
+          } 
+        /> 
+        <Route 
+          path="/event/admin/studentregs/:eventid" 
+          element={
+            <AuthRoute>
+              <Regdetails/>
             </AuthRoute>
           } 
         /> 
