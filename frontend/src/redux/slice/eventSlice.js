@@ -93,24 +93,6 @@ const eventSlice = createSlice({
           console.error("Error updating event:", error);
         });
     },
-    registerAction: (state, action) => {
-      const regDetails={
-          studentname:action.payload.studentname,
-          studentemail:action.payload.studentemail,
-          jntuno:action.payload.jntuno,
-          studentmobile:action.payload.studentmobile,
-          studentyear:action.payload.studentyear,
-          branch:action.payload.branch,
-      }
-
-      axios.post(`https://cc-blog-backend.onrender.com/api/v1/student/reg`,regDetails).then((response)=>{
-          console.log("Student Registered Successfully!",response.data);  
-      })
-      .catch((error)=>{
-          console.log("An Error occured while registering",error);
-      })
-
-  },
   },
   
 });
@@ -124,7 +106,6 @@ export const eventlistApi = () => async (dispatch) => {
   }
 };
 
-export const { seteveAction, addeveAction, removeeveAction, updateeveAction,registerAction} =
-  eventSlice.actions;
+export const { seteveAction, addeveAction, removeeveAction, updateeveAction} =eventSlice.actions;
 export const EventList = (state) => state.event.clubEves;
 export default eventSlice.reducer;

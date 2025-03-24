@@ -1,0 +1,82 @@
+.regdetails {
+    margin-top: 5rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.regdetails:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.regdetails table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.regdetails table th,
+.regdetails table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.regdetails table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.regdetails table tr {
+    background-color: #f9f9f9;
+}
+
+.regdetails table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.regdetails table td {
+    color: #333;
+}
+
+.download-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.download-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.download-btn:active {
+    transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.no-registrations {
+    font-size: 18px;
+    color: #555;
+    animation: fadeIn 1s ease-in-out;
+}

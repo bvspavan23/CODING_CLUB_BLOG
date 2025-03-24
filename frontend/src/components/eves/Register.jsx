@@ -1,16 +1,19 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import "react-quill/dist/quill.snow.css";
-import { SiDatabricks } from "react-icons/si";
 import { useDispatch } from "react-redux";
-import { registerAction } from "../../redux/slice/eventSlice";
+import { registerAction } from "../../redux/slice/everegSlice";
 import { registerEventAPI } from "../../services/events/eventService";
 import AlertMessage from "../Alert/AlertMessage";
 import { MdOutlinePeopleOutline } from "react-icons/md";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
+import { CiMobile3 } from "react-icons/ci";
+import { MdAlternateEmail } from "react-icons/md";
+import { FaRegIdCard } from "react-icons/fa6";
 
 
 // Validation schema
@@ -23,6 +26,9 @@ const validationSchema = Yup.object({
 
 const Registerator= () => {
   const dispatch = useDispatch();
+  const {eventid, eventname} =useParams();
+  console.log("name from url:", eventname);
+  console.log("id from url:", eventid);
 
   const mutation = useMutation({
     mutationFn: registerEventAPI,
@@ -40,8 +46,12 @@ const Registerator= () => {
     },
     validationSchema,
     onSubmit: (values) => {
+      const regData={
+        eventid,
+        ...values
+      }
       mutation
-        .mutateAsync(values)
+        .mutateAsync(regData)
         .then((data) => {
           dispatch(registerAction(data));
         })
@@ -55,7 +65,7 @@ const Registerator= () => {
       className="max-w-lg mx-auto  bg-white p-6 rounded-lg shadow-lg space-y-6 mt-20"
     >
       <div className="text-center">
-        <h2 className="text-2xl font-semibold text-gray-800">Register Event</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">Register Event For {eventname}</h2>
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
 
@@ -79,7 +89,7 @@ const Registerator= () => {
 
       <div className="flex flex-col">
         <label htmlFor="studentemail" className="text-gray-700 font-medium">
-          <MdOutlineDriveFileRenameOutline className="inline mr-2 text-blue-500" />
+          <MdAlternateEmail className="inline mr-2 text-blue-500" />
           Student Email
         </label>
         <input
@@ -97,7 +107,7 @@ const Registerator= () => {
 
       <div className="flex flex-col">
         <label htmlFor="jntuno" className="text-gray-700 font-medium">
-          <SiDatabricks className="inline mr-2 text-blue-500" />
+          <FaRegIdCard className="inline mr-2 text-blue-500" />
           Jntu No
         </label>
         <input
@@ -114,7 +124,7 @@ const Registerator= () => {
       </div>
       <div className="flex flex-col">
         <label htmlFor="studentmobile" className="text-gray-700 font-medium">
-          <MdOutlineDriveFileRenameOutline className="inline mr-2 text-blue-500" />
+          <CiMobile3 className="inline mr-2 text-blue-500" />
           Contact Number
         </label>
         <input
