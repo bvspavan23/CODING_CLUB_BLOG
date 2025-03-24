@@ -85,6 +85,30 @@
     background-color: #c82333;
     transform: scale(1.05);
 }
+.reg-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Fix: Ensures buttons don't overflow */
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+.reg-buttons button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 150px;
+    font-size: 15px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+.viewregs{
+    background-color: #007bff;
+    color: white;
+}
+.viewregs:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
 @media (max-width: 768px) {
     .event-card {
         flex-direction: column;
@@ -102,6 +126,13 @@
     }
     .event-buttons button {
         width: 100%; 
+    }
+    .reg-buttons {
+        flex-direction: column; /* Fix: Stack buttons on small screens */
+        width: 100%;
+    }
+    .reg-buttons button {
+        width: 100%; /* Make buttons full-width for better mobile UX */
     }
 }
 @media (min-width: 1200px) {

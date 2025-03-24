@@ -25,6 +25,9 @@ const Eve = ({ id, title, poster }) => {
   const handleUpdate = () => {
     navigate(`/event/eventinfo/update/${title}/${id}`);
   };
+  const handleviewregs = () => {
+    navigate(`/event/admin/studentregs/${id}`)
+}
   return (
     <div className="event-container">
       <div className="event-card">
@@ -46,6 +49,9 @@ const Eve = ({ id, title, poster }) => {
               Delete
             </button>
           </div>
+          <div className="reg-buttons">
+                    <button  onClick={handleviewregs} className="viewregs">View Registrations</button>
+                </div>
         </div>
       </div>
     </div>
