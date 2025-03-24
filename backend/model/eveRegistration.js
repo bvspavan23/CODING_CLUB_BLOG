@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const EveRegistrationSchema=new mongoose.Schema(
   {
+    eventid: {
+      type: String,
+      required: true,
+    },
     studentemail: {
       type: String,
       required: true,

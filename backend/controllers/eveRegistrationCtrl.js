@@ -3,9 +3,9 @@ const EveRegistration = require("../model/eveRegistration");
 
 const eveRegs={
   register: asyncHandler(async (req, res) => {
-    const {studentname, studentemail, jntuno, studentmobile, studentyear, branch} = req.body;
+    const {eventid,studentname, studentemail, jntuno, studentmobile, studentyear, branch} = req.body;
     //!Validate
-    if (!studentname || !studentemail || !jntuno || !studentmobile || !studentyear || !branch) {
+    if (!eventid || !studentname || !studentemail || !jntuno || !studentmobile || !studentyear || !branch) {
       throw new Error("Please all fields are required");
     }
     //!Check if user already exists
@@ -15,6 +15,7 @@ const eveRegs={
     }
     //! Create the user and save into db
     const dbUser= await EveRegistration.create({
+      eventid,
       studentname,
       studentemail,
       jntuno,
@@ -32,5 +33,9 @@ const eveRegs={
       branch: dbUser.branch
     });
   }),
+  fetch: asyncHandler(async (req, res) => {
+    const eveReg = await EveRegistration.find();
+    res.json(eveReg);
+  })
 };
 module.exports = eveRegs;
