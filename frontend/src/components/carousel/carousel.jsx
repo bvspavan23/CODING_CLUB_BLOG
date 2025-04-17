@@ -66,7 +66,7 @@ const Carousel = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl font-bold text-center mb-16"
         >
-          Upcoming pics
+          Upcoming Events
         </motion.h2>
 
         <div className="relative">
