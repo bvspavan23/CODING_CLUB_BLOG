@@ -40,6 +40,9 @@ const Navbar = () => {
                     <Link to="/events" className="block w-full h-full">Events</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
+                    <Link to="/join-buzz" className="block w-full h-full">Buzzers</Link>
+                </li>
+                <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
                     <Link to="/team" className="block w-full h-full">Team</Link>
                 </li>
                 <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>

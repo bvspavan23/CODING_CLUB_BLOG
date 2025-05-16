@@ -1,6 +1,7 @@
 import React from "react";
 import "../Head/Head.css";
 import Sample from "../../assets/Sample.mp4";
+import Earth from "../../assets/fullearth.mp4"
 import { Typewriter } from "react-simple-typewriter"; // Updated import
 import Carousel from "../carousel/carousel.jsx";
 import Footer from "../Footer/Footer.jsx";
@@ -10,6 +11,7 @@ const Head = () => {
     <div>
       <div className="main">
         <video autoPlay muted loop src={Sample} className="botvideo"></video>
+        {/* <video autoPlay muted loop src={Earth} className="botvideo"></video> */}
         <div className="content1 flex flex-col space-x-4 md:space-x-2">
           <h3 className="md:m-12 text-6xl md:text-8xl">
             Hola! <i>Coders</i>

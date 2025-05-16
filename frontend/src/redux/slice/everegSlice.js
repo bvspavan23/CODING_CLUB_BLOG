@@ -6,7 +6,6 @@ const regSlice = createSlice({
     initialState: {
         eveRegs: [],
     },
-
     reducers: {
         setregAction: (state, action) => {
             state.eveRegs = action.payload;
@@ -21,18 +20,8 @@ const regSlice = createSlice({
                 studentyear:action.payload.studentyear,
                 branch:action.payload.branch,
             })
-            
-            // axios.post(`http://localhost:8000/api/v1/student/reg`,regDetails).then((response)=>{
-            //     state.eveRegs.push(regDetails);
-            //     console.log("Student Registered Successfully!",response.data);  
-            // })
-            // .catch((error)=>{
-            //     console.log("An Error occured while registering",error);
-            // })
-
         }
-    },        
-        
+    },           
 });
 
 export const registrationsApi = () => async (dispatch) => {

@@ -19,6 +19,11 @@ import { eventlistApi } from './redux/slice/eventSlice.js';
 import Register from './components/eves/Register.jsx';
 import About from './components/About/About.jsx';
 import Regdetails from './components/Studentregs/Regdetails.jsx';
+import BuzzList from './components/Buzz/Buzzlist.jsx';
+import CreateBuzz from './components/Buzz/CreateBuzz.jsx';
+import AdminBuzz from './components/Buzz/AdminBuzz.jsx';
+import JoinRoom from './components/Buzz/JoinRoom.jsx';
+import Buzz from './components/Buzz/Buzz.jsx';
 function App(){
   
   const dispatch = useDispatch();
@@ -41,11 +46,37 @@ function App(){
         <Route path="/events" element={<PublicEve/>}/> 
         <Route path="/event/eventinfo/:eventname/:eventid" element={<EventInfo/>}/>
         <Route path="/event/register/:eventname/:eventid" element={<Register/>}/>
+        <Route path="/join-buzz" element={<JoinRoom/>}/>
+        <Route path="/buzzer/:roomId" element={<Buzz/>}/>
         <Route 
           path="/edit/add/eve" 
           element={
             <AuthRoute>
               <EventAdder />
+            </AuthRoute>
+          } 
+        />
+        <Route 
+          path="/CC/create-buzz" 
+          element={
+            <AuthRoute>
+              <CreateBuzz/>
+            </AuthRoute>
+          } 
+        />
+        <Route 
+          path="/CC/buzzes" 
+          element={
+            <AuthRoute>
+              <BuzzList/>
+            </AuthRoute>
+          } 
+        />
+        <Route 
+          path="/manage/:roomId" 
+          element={
+            <AuthRoute>
+              <AdminBuzz/>
             </AuthRoute>
           } 
         />
