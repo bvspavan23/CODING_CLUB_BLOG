@@ -1,7 +1,7 @@
 import React from "react";
 import "../Head/Head.css";
 import Sample from "../../assets/Sample.mp4";
-import Earth from "../../assets/fullearth.mp4"
+// import Earth from "../../assets/fullearth.mp4"
 import { Typewriter } from "react-simple-typewriter"; // Updated import
 import Carousel from "../carousel/carousel.jsx";
 import Footer from "../Footer/Footer.jsx";
