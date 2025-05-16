@@ -2,6 +2,10 @@ require('dotenv').config();
 const express=require('express');
 const mongoose=require('mongoose');
 const cors=require('cors')
+const http = require("http");
+const socketio = require("socket.io");
+const socketIo = require("./socket");
+const buzzRoutes = require("./Routes/BuzzRouter");
 const adminRouter= require("./Routes/AdminRoute");
 const eventRouter= require("./Routes/AddEventRoute");
 const fetchRouter= require("./Routes/FetchEventRoute");
@@ -13,6 +17,7 @@ const errorHandler = require("./middlewares/errHandler");
 const app=express();
 const PORT = process.env.PORT || 8000;
 const URL=process.env.MONGO_URL
+const server = http.createServer(app);
 mongoose
   .connect(URL)
   .then(() => console.log("DB Connected"))
@@ -23,28 +28,37 @@ mongoose
     cloud_name:process.env.CLOUD_NAME,
     api_secret:process.env.CLOUD_API_SECRET
   })
+
+  const io = socketio(server, {
+  cors: {
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com","http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ["websocket", "polling"]
+});
   
   const corsOptions = {
-    origin: ["https://cc-blog-frontend-ehr1.onrender.com"], 
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com", "http://localhost:5173"], 
     methods: "GET,POST,PUT,DELETE",
-    credentials: true, // Enable if using authentication or cookies
+    credentials: true,
   };
 
-  
   app.use(cors(corsOptions));
-  
-
   app.use(express.json());
-
+  
   app.use("/",adminRouter);
   app.use("/",eventRouter);
   app.use("/",fetchRouter);
   app.use("/",deleteRouter);
   app.use("/",updateRouter);
   app.use("/",eveRegRouter);
+  app.use("/",buzzRoutes);
   
   app.use(errorHandler);
 
-  app.listen(PORT, () =>
+  socketIo(io);
+
+  server.listen(PORT, () =>
     console.log(`Server is running on this port... ${PORT} `)
 )
