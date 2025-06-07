@@ -10,6 +10,7 @@ const AdminSchema=new mongoose.Schema(
       type: String,
       required: true,
     },
+    quizzes:[{type:mongoose.Schema.Types.ObjectId,ref:"Quiz"}],
   },
   {
     timestamps: true,

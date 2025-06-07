@@ -12,6 +12,10 @@ const fetchRouter= require("./Routes/FetchEventRoute");
 const deleteRouter= require("./Routes/DeleteEventRoute");
 const updateRouter= require("./Routes/UpdateEventRoute");
 const eveRegRouter= require("./Routes/EveRegRoute");
+const QuestionRoutes=require('./Routes/QuestionRoutes');
+const joinRoutes=require('./Routes/JoinRoutes');
+const botRoutes=require('./Routes/ChatbotRoutes');
+const QuizRoutes=require('./Routes/QuizRoutes');
 const cloudinary=require("cloudinary").v2
 const errorHandler = require("./middlewares/errHandler");
 const app=express();
@@ -39,7 +43,7 @@ mongoose
 });
   
   const corsOptions = {
-    origin: ["https://cc-blog-frontend-ehr1.onrender.com", "http://localhost:5173"], 
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com","http://localhost:5173"], 
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   };
@@ -54,6 +58,10 @@ mongoose
   app.use("/",updateRouter);
   app.use("/",eveRegRouter);
   app.use("/",buzzRoutes);
+  app.use("/",QuizRoutes);
+  app.use("/",QuestionRoutes);
+  app.use("/",joinRoutes);
+  app.use("/",botRoutes);
   
   app.use(errorHandler);
 

@@ -1,0 +1,11 @@
+const express = require("express");
+const joincontroller = require("../controllers/JoinRoomCtrl");
+const isAuthenticated = require("../middlewares/isAuth");
+const joinRouter = express.Router();
+joinRouter.post("/api/v1/join-quiz",joincontroller.join);
+joinRouter.post("/api/v1/submit-quiz",joincontroller.submit);
+joinRouter.post("/api/v1/submit-quiz-all",joincontroller.submitAll);
+joinRouter.get("/api/v1/join/:id",joincontroller.getjoinbyId);
+joinRouter.delete("/api/v1/join/clean",joincontroller.deleteall);
+joinRouter.get("/api/v1/leaderboard/:QuizId",isAuthenticated,joincontroller.getJoinByQuizId);
+module.exports = joinRouter;
