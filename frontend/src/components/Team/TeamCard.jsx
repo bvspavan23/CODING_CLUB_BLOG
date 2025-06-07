@@ -8,7 +8,7 @@ const TeamCard = ({
     year, 
     branch,
     profile = defaultProfile,
-    portfolio = "https://www.portfolio.com",
+    portfolio = "https://www.portfolio.in",
     instagram = "https://www.instagram.com",
     facebook = "https://www.facebook.com",
     linkedin = "https://www.linkedin.com",
