@@ -73,11 +73,11 @@ const Navbar = () => {
             Join-Quizz
           </Link>
         </li>
-        <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
+        {/* <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
           <Link to="/quizzes/login" className="block w-full h-full">
             Create Quiz
           </Link>
-        </li>
+        </li> */}
         <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
           <Link to="/admin" className="block w-full h-full">
             Login
