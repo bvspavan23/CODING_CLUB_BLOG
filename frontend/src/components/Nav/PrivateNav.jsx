@@ -76,6 +76,16 @@ const PrivateNav = () => {
             Events
           </Link>
         </li>
+         <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
+          <Link to="/create-quizz" onClick={closeNav}>
+            Create Quiz
+          </Link>
+        </li>
+        <li className="mx-4 my-6 md:my-0 bot cursor-pointer" onClick={closeNav}>
+          <Link to="/admin/quizzes" onClick={closeNav}>
+            Manage  Quizzes
+          </Link>
+        </li>
         <li className="mx-4 my-6 md:my-0 bot cursor-pointer">
           <button
             onClick={handleLogout}

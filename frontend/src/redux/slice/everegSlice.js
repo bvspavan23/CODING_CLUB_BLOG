@@ -27,6 +27,7 @@ const regSlice = createSlice({
 export const registrationsApi = () => async (dispatch) => {
     try {
         const response = await axios.get("https://cc-blog-backend.onrender.com/api/v1/students");
+        // const response = await axios.get("https://cc-blog-backend.onrender.com/api/v1/students");
         dispatch(setregAction(response.data));
     } catch (error) {
         console.log(error);

@@ -8,13 +8,21 @@
 }
 .cardimg {
     position: relative;
-    margin: 5px;
+    margin: 5px auto; 
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0);
     transition: 0.5s ease-in;
+    display: flex;
+    justify-content: center; 
+    width: 100%; 
+    max-height: 250px;
+    height: auto;
 }
 .cardimg img {
     border-radius: 10px;
+    width: 90%;  
+    object-fit:cover; 
+    object-position:top;
 }
 .overlay {
     position: absolute;
@@ -32,7 +40,7 @@
 }
 .links {
     position: absolute;
-    top: -100px;
+    top: -50px;
     right: 10px;
     margin: 10px;
     height: 20vh;
@@ -52,7 +60,7 @@
 }
 .links a {
     text-decoration: none;
-    color: black;
+    color: #00FFFF;
 }
 .card:hover .links {
     top: 5px;
@@ -62,23 +70,33 @@
 
 .team-container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
+    /* border: 12px solid pink; */
+    height: auto;
+    max-width: 1400px; 
+    margin: 0 auto; 
 }
-
 .card {
+    border: 2px solid black;
+    height: 350px;
+    width: 300px;
+    border-radius: 10px;
+    position: relative;
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 .content {
     position: relative;
-    /* color: red; */
     font-size: 15px;
-    text-align:left;
-    width: 10vw;
-    /* padding-bottom: 10px;
-    z-index: 5; */
+    text-align: center;
+    width: 100%;
+    padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
 }
 

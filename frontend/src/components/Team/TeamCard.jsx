@@ -1,31 +1,45 @@
 import React from "react";
+import { FaInstagram, FaFacebook, FaLinkedin, FaTwitter, FaGlobe } from "react-icons/fa";
 import '../Team/Team.css';
-import profile from '../../assets/profile.png';
+import defaultProfile from '../../assets/profile.png';
 
-const TeamCard = ({ name, year, branch }) => {
+const TeamCard = ({ 
+    name, 
+    year, 
+    branch,
+    profile = defaultProfile,
+    portfolio = "https://www.portfolio.com",
+    instagram = "https://www.instagram.com",
+    facebook = "https://www.facebook.com",
+    linkedin = "https://www.linkedin.com",
+    twitter = "https://www.twitter.com"
+}) => {
     return (
         <div className="card">
             <div className="cardimg">
-                <img src={profile} alt="Profile" />
+                <img src={profile} alt={`${name}'s profile`} />
                 <div className="overlay"></div>
             </div>
             <div className="content">
-                {name}<br />
-                {year}<br />
-                {branch}
+                <h3>{name}</h3>
+                <p>{year}</p>
+                <p>{branch}</p>
             </div>
             <div className="links">
-                <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-instagram"></i>
+                <a href={portfolio} target="_blank" rel="noopener noreferrer">
+                    <FaGlobe />
                 </a>
-                <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-facebook"></i>
+                <a href={instagram} target="_blank" rel="noopener noreferrer">
+                    <FaInstagram />
                 </a>
-                <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-linkedin"></i>
+                <a href={facebook} target="_blank" rel="noopener noreferrer">
+                    <FaFacebook />
                 </a>
-                <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-twitter"></i>
+                <a href={linkedin} target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin />
+                </a>
+                <a href={twitter} target="_blank" rel="noopener noreferrer">
+                    <FaTwitter />
                 </a>
             </div>
         </div>

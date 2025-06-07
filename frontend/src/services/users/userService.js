@@ -12,3 +12,12 @@ export const loginAPI = async ({ email, password }) => {
   //Return a promise
   return response.data;
 }
+export const registerAPI = async ({ username,email, password }) => {
+  const response = await axios.post(`${base_url}/users/register`, {
+    username,
+    email,
+    password,
+  });
+  //Return a promise
+  return response.data;
+}

@@ -24,6 +24,16 @@ import CreateBuzz from './components/Buzz/CreateBuzz.jsx';
 import AdminBuzz from './components/Buzz/AdminBuzz.jsx';
 import JoinRoom from './components/Buzz/JoinRoom.jsx';
 import Buzz from './components/Buzz/Buzz.jsx';
+import QuizRegister from "./components/Quiz/QuizRegister.jsx";
+import QuizTest from "./components/Quiz/QuizTest.jsx";
+import Join from "./components/Quiz/Join.jsx";
+import End from "./components/Quiz/End.jsx";
+import QuizList from "./components/Quiz/QuizList.jsx";
+import AddQuiz from "./components/Quiz/AddQuiz.jsx";
+import ManageQuiz from "./components/Quiz/ManageQuiz.jsx";
+import HostQuiz from "./components/RealTime/HostQuiz.jsx";
+import Leaderboard from "./components/Quiz/LeaderBoard.jsx";
+import Update from "./components/Quiz/Update.jsx";
 function App(){
   
   const dispatch = useDispatch();
@@ -48,6 +58,11 @@ function App(){
         <Route path="/event/register/:eventname/:eventid" element={<Register/>}/>
         <Route path="/join-buzz" element={<JoinRoom/>}/>
         <Route path="/buzzer/:roomId" element={<Buzz/>}/>
+        <Route path="/quizzes/register" element={<QuizRegister />} />
+        <Route path="/quizzes/:id/:joinId/:roomId" element={<QuizTest />} />
+        <Route path="/quizzes/join-quizz" element={<Join />} />
+        {/* <Route path="/chat-bot" element={<ChatBot />} /> */}
+        <Route path="/quiz/end" element={<End/>} />
         <Route 
           path="/edit/add/eve" 
           element={
@@ -104,6 +119,54 @@ function App(){
             </AuthRoute>
           } 
         /> 
+         <Route
+          path="/admin/quizzes"
+          element={
+            <AuthRoute>
+              <QuizList />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/create-quizz"
+          element={
+            <AuthRoute>
+              <AddQuiz />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/quiz/update/:id"
+          element={
+            <AuthRoute>
+              <Update/>
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/manage/quiz/:id"
+          element={
+            <AuthRoute>
+              <ManageQuiz />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/host-quiz/:roomId/:id"
+          element={
+            <AuthRoute>
+              <HostQuiz/>
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/quizzes/leaderboard/:QuizId"
+          element={
+            <AuthRoute>
+              <Leaderboard/>
+            </AuthRoute>
+          }
+        />
       </Routes>
     </Router>
   )
