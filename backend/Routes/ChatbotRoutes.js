@@ -20,7 +20,7 @@ router.post("/generate-question", async (req, res) => {
     res.json({ result: responseText });
   } catch (err) {
     console.error("Gemini Error:", err.message);
-    res.status(500).json({ error: "Failed to generate question" });
+    res.status(500).json({ error:err.message});
   }
 });
 
