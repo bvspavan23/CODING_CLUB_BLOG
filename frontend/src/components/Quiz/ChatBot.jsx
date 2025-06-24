@@ -43,7 +43,7 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
     setLoading(true);
 
     try {
-      const res = await axios.post('https://cc-blog-backend.onrender.com/generate-question', {
+      const res = await axios.post('https://cc-blog-backend-k5no.onrender.com/generate-question', {
         prompt: input,
       });
 
