@@ -3,6 +3,8 @@ const router = express.Router();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// console.log("Gemini API Key:", process.env.GEMINI_API_KEY);
+
 
 router.post("/generate-question", async (req, res) => {
   try {
@@ -20,7 +22,7 @@ router.post("/generate-question", async (req, res) => {
     res.json({ result: responseText });
   } catch (err) {
     console.error("Gemini Error:", err.message);
-    res.status(500).json({ error: "Failed to generate question" });
+    res.status(500).json({ error:  "Internal Server Error" });
   }
 });
 

@@ -28,7 +28,6 @@ const admins = {
   }),
   login: asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    //!check if email is valid
     const user = await Admin.findOne({ email });
     if (!user) {
       throw new Error("Invalid login credentials");
@@ -38,7 +37,6 @@ const admins = {
     if (!isMatch) {
       throw new Error("Invalid login credentials");
     }
-    //! Generate a token
     const token = jwt.sign({ id: user._id }, "appadam", {
       expiresIn: "5h",
     });
