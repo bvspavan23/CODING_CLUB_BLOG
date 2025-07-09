@@ -9,7 +9,7 @@ const teamMembers = [
     { name: "Bhavana", year:"4th Year", branch: "CSE-AIML",profile:"https://res.cloudinary.com/dwb8m6n0y/image/upload/Team/Bhavana_uuatce.png"},
     { name: "Durga Prasad", year:"4th Year", branch: "CSE-AIDS",profile:"https://res.cloudinary.com/dwb8m6n0y/image/upload/Team/Durga_Prasad_gwl19i.jpg"},
     { name: "Youva Sri", year:"4th Year", branch: "CSE",profile:"https://res.cloudinary.com/dwb8m6n0y/image/upload/Team/Youva_Sri_x4jf2a.jpg"},
-    { name: "Jyothi", year:"4th Year", branch: "CSE"},
+    { name: "Jyothi", year:"4th Year", branch: "CSE",profile:"https://res.cloudinary.com/dwb8m6n0y/image/upload/Team/jaddu_jmap6u.jpg"},
     { name: "Nanditha", year:"4th Year", branch: "CSE"},
     { name: "Ganga Raju", year:"4th Year", branch: "CSE"},
     { name: "Dinesh", year:"4th Year", branch: "CSE"},
