@@ -3,7 +3,7 @@ import "../Head/Head.css";
 import Sample from "../../assets/Sample.mp4";
 import Video1 from "../../assets/video1.mp4";
 // import Earth from "../../assets/fullearth.mp4"
-import { Typewriter } from "react-simple-typewriter"; // Updated import
+import { Typewriter } from "react-simple-typewriter";
 import Carousel from "../carousel/carousel.jsx";
 import Footer from "../Footer/Footer.jsx";
 
@@ -11,29 +11,7 @@ const Head = () => {
   return (
     <div>
       <div className="main">
-        <video autoPlay muted loop src={Video1} className="botvideo"></video>
-        {/* <video autoPlay muted loop src={Earth} className="botvideo"></video> */}
-        {/* <div className="content1 flex flex-col space-x-4 md:space-x-2">
-          <h3 className="md:m-12 text-6xl md:text-8xl">
-            Hola! <i>Coders</i>
-          </h3>
-          <span>
-            <h3 className="mt-12 md:m-12 text-6xl md:text-8xl">
-              learn
-              <span>
-                <Typewriter
-                  words={[" Java", " Python", " C++", " React js"]} // Words to type
-                  loop={true} // Infinite loop
-                  cursor
-                  cursorStyle="_"
-                  typeSpeed={70}
-                  deleteSpeed={50}
-                  delaySpeed={2000}
-                />
-              </span>
-            </h3>
-          </span>
-        </div> */}
+        <video autoPlay muted loop src={Video1} className="w-full h-full object-fill md:object-fill lg:object-cover absolute top-0 left-0 -z-10"></video>
       </div>
       <div className="slides">
         <Carousel />

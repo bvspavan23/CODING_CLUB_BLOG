@@ -10,7 +10,7 @@ const store = configureStore({
     event: eventReducer,
     eveRegs: regReducer,
     buzzer: buzzReducer,
-    quiz: quizReducer
+    quiz: quizReducer,
   },
 });
 export default store;

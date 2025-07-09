@@ -101,7 +101,7 @@ const eventSlice = createSlice({
 export const eventlistApi = () => async (dispatch) => {
   try {
     const response = await axios.get("https://cc-blog-backend.onrender.com/api/v1/events");
-    // const response = await axios.get("https://cc-blog-backend.onrender.com/api/v1/events");
+    // const response = await axios.get("http://localhost:8000/api/v1/events");
     dispatch(seteveAction(response.data));
   } catch (error) {
     console.log(error);

@@ -8,6 +8,7 @@ import { loginAPI } from "../../services/users/userService";
 import AlertMessage from "../Alert/AlertMessage";
 import { loginAction } from "../../redux/slice/authSlice";
 import Sample from "../../assets/Sample.mp4";
+import Theme from "../../assets/cc_theme.mp4";
 import "../Login/signin.css"
 //! Validation schema
 const validationSchema = Yup.object({
@@ -50,7 +51,7 @@ const Login = () => {
 
   return (
     <div className="Login">
-      <video autoPlay muted loop src={Sample} className="botvideo"></video>
+      <video autoPlay muted loop src={Theme} className="botvideo"></video>
     <div className="flex items-center justify-center min-h-screen">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-lg shadow-xl">
         <div className="text-center">
