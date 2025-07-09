@@ -35,7 +35,7 @@ mongoose
 
   const io = socketio(server, {
   cors: {
-    origin: ["https://cc-blog-frontend-ehr1.onrender.com","http://localhost:5173"],
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true
   },
@@ -43,8 +43,8 @@ mongoose
 });
   
   const corsOptions = {
-    origin: ["https://cc-blog-frontend-ehr1.onrender.com","http://localhost:5173"], 
-    methods: "GET,POST,PUT,DELETE",
+    origin: ["https://cc-blog-frontend-ehr1.onrender.com"], 
+    methods: ["GET","POST","PUT","DELETE"],
     credentials: true,
   };
 
