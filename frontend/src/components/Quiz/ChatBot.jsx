@@ -8,7 +8,8 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
       sender: "Bot Papi",
       message: "Hello! I'll help you generate quiz questions. Just tell me the topic and difficulty level (easy, medium, hard)!",
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isUser: false
+      isUser: false,
+      isQuestion: false
     }
   ]);
   const [loading, setLoading] = useState(false);
@@ -29,43 +30,58 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
     }
   }, [input]);
 
+  const handleAddToQuiz = (question) => {
+    if (onQuestionGenerated) {
+      onQuestionGenerated(question);
+      // Add a confirmation message
+      setMessages(prev => [...prev, {
+        sender: "Bot Papi",
+        message: "✅ Question added to your quiz!",
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isUser: false,
+        isQuestion: false
+      }]);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
+
+    // Add user message
     const userMessage = {
       sender: "You",
       message: input,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isUser: true
+      isUser: true,
+      isQuestion: false
     };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setLoading(true);
 
     try {
-      const res = await axios.post('https://cc-blog-backend-k5no.onrender.com/generate-question', {
+      const res = await axios.post('https://quizz-9oua.onrender.com/generate-question', {
         prompt: input,
       });
 
+      // Add bot response
       const botMessage = {
         sender: "Bot Papi",
         message: res.data.result,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        isUser: false
+        isUser: false,
+        isQuestion: true // Mark this message as a question
       };
       setMessages(prev => [...prev, botMessage]);
-
-      // Call the callback only after we've shown the message
-      if (onQuestionGenerated) {
-        onQuestionGenerated(res.data.result);
-      }
     } catch (error) {
       console.error("Error generating question:", error.message);
       const errorMessage = {
         sender: "Bot Papi",
         message: "⚠️ Oops! Something went wrong. Try again.",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        isUser: false
+        isUser: false,
+        isQuestion: false
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -75,7 +91,7 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
 
   if (isMinimized) {
     return (
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-[60]">
         <div 
           className="bg-gradient-to-r from-[#4f5bd5] to-[#962fbf] text-white p-3 rounded-full shadow-lg cursor-pointer hover:shadow-xl transition-all"
           onClick={() => setIsMinimized(false)}
@@ -90,7 +106,7 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-full max-w-md">
+    <div className="fixed bottom-6 right-6 z-[60] w-full max-w-md">
       <div className="flex flex-col h-[500px] bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden transform transition-all">
         {/* Chat header */}
         <div className="bg-gradient-to-r from-[#4f5bd5] to-[#962fbf] p-4 text-white flex justify-between items-center">
@@ -134,6 +150,14 @@ const ChatBot = ({ onQuestionGenerated, onClose }) => {
                 <div className="text-sm font-bold mb-1">{msg.sender}</div>
                 <div className="whitespace-pre-wrap">{msg.message}</div>
                 <div className="text-xs mt-1 opacity-70">{msg.time}</div>
+                {msg.isQuestion && !msg.isUser && (
+                  <button
+                    onClick={() => handleAddToQuiz(msg.message)}
+                    className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600 transition-colors"
+                  >
+                    Add to Quiz
+                  </button>
+                )}
               </div>
             </div>
           ))}
