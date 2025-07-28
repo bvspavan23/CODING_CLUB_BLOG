@@ -17,11 +17,25 @@ const ManageQuiz = () => {
 
   const handleQuestionGenerated = (generatedText) => {
     try {
+      // Split the text into lines and get the first line as the question
+      const lines = generatedText.split('\n');
+      const questionText = lines[0].replace(/^\d+\.\s*/, '');
+      const options = lines
+        .slice(1)
+        .filter(line => line.trim().startsWith('-') || line.trim().match(/^[a-d]\)/i))
+        .map(line => line.replace(/^[-\s]*|^[a-d]\)\s*/i, '').trim())
+        .filter(option => option);
+
+      // Default to 4 options if less are found
+      while (options.length < 4) {
+        options.push('');
+      }
+
       const newQuestion = {
         id: Date.now(),
-        question: generatedText.split('\n')[0] || "New generated question",
+        question: questionText || "New generated question",
         points: 1,
-        options: ["", "", "", ""],
+        options: options.slice(0, 4),
         correctAnswer: [],
       };
       setQuestions([...questions, newQuestion]);
@@ -369,18 +383,16 @@ const ManageQuiz = () => {
         />
       )}
 
-{!showChatBot && (
-  <button
-    onClick={() => setShowChatBot(true)}
-    className="fixed bottom-8 right-8 bg-gradient-to-r from-[#4f5bd5] to-[#962fbf] text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all z-40 flex items-center justify-center"
-    title="AI Question Generator"
-  >
-    <div className="flex items-center">
-      <span className="text-2xl mr-2">🤖</span>
-      <span className="hidden md:inline font-medium">Ask Botpapi</span>
-    </div>
-  </button>
-)}
+      <button
+        onClick={() => setShowChatBot(true)}
+        className="fixed bottom-8 right-8 bg-gradient-to-r from-[#4f5bd5] to-[#962fbf] text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all z-50 flex items-center justify-center"
+        title="AI Question Generator"
+      >
+        <div className="flex items-center">
+          <span className="text-2xl mr-2">🤖</span>
+          <span className="hidden md:inline font-medium">Ask Botpapi</span>
+        </div>
+      </button>
     </div>
   );
 };
