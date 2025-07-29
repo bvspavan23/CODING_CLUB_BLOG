@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { join } from '../../redux/slice/joinSlice';
+import { join } from '../../redux/slice/JoinSlice';
 import { getQuizesAPI } from '../../services/quizzes/QuizServices';
 import { joinAPI } from '../../services/quizzes/JoinServices';
 import { io } from 'socket.io-client';
