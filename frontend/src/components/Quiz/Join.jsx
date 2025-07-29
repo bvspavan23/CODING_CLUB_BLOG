@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { join } from '../../redux/slice/joinSlice';
 import { getQuizesAPI } from '../../services/quizzes/QuizServices';
 import { joinAPI } from '../../services/quizzes/JoinServices';
 import { io } from 'socket.io-client';
 
 const JoinRoom=()=>{
+  const dispatch = useDispatch();
   const [quizCode, setQuizCode] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
@@ -26,7 +29,7 @@ const JoinRoom=()=>{
     setLoading(true);
     setError('');
     try {
-      const response = await getQuizesAPI();
+      const response = await getPublicQuizesAPI();
       if (!response.quizzes || !Array.isArray(response.quizzes)) {
         throw new Error("Invalid quizzes data format");
       }
@@ -43,6 +46,9 @@ const JoinRoom=()=>{
       });
       const joinId = joinResponse.joinData._id;
       if (joinResponse && joinResponse.joinData) {
+        // Dispatch join action to store join info in Redux and localStorage
+        dispatch(join({ ...joinResponse.joinData, quizId: validQuiz.id }));
+
         const newSocket = io('https://cc-blog-backend.onrender.com');
         setSocket(newSocket);
         newSocket.emit('join-room', {
