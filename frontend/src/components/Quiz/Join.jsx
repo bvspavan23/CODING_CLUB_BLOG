@@ -29,7 +29,7 @@ const JoinRoom=()=>{
     setLoading(true);
     setError('');
     try {
-      const response = await getPublicQuizesAPI();
+      const response = await getQuizesAPI();
       if (!response.quizzes || !Array.isArray(response.quizzes)) {
         throw new Error("Invalid quizzes data format");
       }
