@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { exit } from "../../redux/slice/JoinSlice";
 import { getQuizByIdAPI } from "../../services/quizzes/QuizServices";
 import { getPublicQuestionByIdAPI } from "../../services/quizzes/QuestionServices";
 import Panel from "./Panel";
@@ -10,6 +12,8 @@ import { io } from "socket.io-client";
 const QuizTest = () => {
   const { id, joinId, roomId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const joinInfo = useSelector((state) => state.join.joinInfo);
   const [quiz, setQuiz] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -24,6 +28,12 @@ const QuizTest = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    // Check if joinId matches with stored joinInfo
+    if (!joinInfo || joinInfo._id !== joinId) {
+      navigate('/quizzes/join-quizz', { replace: true });
+      return;
+    }
+
     const fetchQuizAndQuestions = async () => {
       try {
         const quizResponse = await getQuizByIdAPI(id);
@@ -41,7 +51,7 @@ const QuizTest = () => {
           setQuestions(questionsData);
           setVisitedQuestions(new Set([0]));
         } else {
-          const socketInstance = io("https://cc-blog-backend.onrender.com");
+          const socketInstance = io("https://quizz-9oua.onrender.com");
           console.log(
             "Participant socket connected:",
             socketInstance.connected,
@@ -101,7 +111,7 @@ const QuizTest = () => {
     return () => {
       if (socket) socket.disconnect();
     };
-  }, [id, joinId]);
+  }, [id, joinId, joinInfo, navigate]);
 
   const handleQuestionSelect = (index) => {
     if (!isRealtime || quizStarted) {
@@ -209,11 +219,13 @@ const QuizTest = () => {
 
       const response = await submitQuizAPI(submissionData);
 
-      // For both normal and realtime quizzes, navigate to /quiz/end
+      // Dispatch exit action to clear join info
+      dispatch(exit());
+      
       setIsSubmitted(true);
       setTimeout(() => {
         navigate(`/quiz/end`);
-      }, 2000); // Show submitted message for 2 seconds before navigating
+      }, 2000);
     } catch (error) {
       console.error("Submission error:", error);
       setError(error.message);
@@ -221,6 +233,23 @@ const QuizTest = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (!joinInfo || joinInfo._id !== joinId) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="p-8 max-w-md mx-auto bg-white rounded-xl shadow-md text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Access Denied</h2>
+          <p className="text-gray-600 mb-6">Please join the quiz with your name first.</p>
+          <button
+            onClick={() => navigate('/join')}
+            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
+          >
+            Go to Join Page
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading)
     return (
