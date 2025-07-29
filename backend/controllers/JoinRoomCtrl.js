@@ -1,6 +1,6 @@
-const Join = require("../models/Join");
+const Join = require("../model/Join");
 const asyncHandler = require("express-async-handler");
-const Question = require("../models/Question");
+const Question = require("../model/Question");
 const joinRoom = {
   join: asyncHandler(async (req, res) => {
     try {
