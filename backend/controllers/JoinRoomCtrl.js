@@ -1,6 +1,6 @@
-const Join = require("../model/Join");
+const Join = require("../models/Join");
 const asyncHandler = require("express-async-handler");
-const Question = require("../model/Question");
+const Question = require("../models/Question");
 const joinRoom = {
   join: asyncHandler(async (req, res) => {
     try {
@@ -14,7 +14,7 @@ const joinRoom = {
       await newJoin.save();
       return res
         .status(201)
-        .json({ message: "Joined room successfully", joinData: newJoin });
+        .json({ message: "Joined room successfully", joinData: newJoin, joinId: newJoin._id });
     } catch (error) {
       console.error("Error joining room:", error);
       return res.status(500).json({ message: "Internal Server Error" });
