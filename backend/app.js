@@ -7,10 +7,7 @@ const socketio = require("socket.io");
 const socketIo = require("./socket");
 const buzzRoutes = require("./Routes/BuzzRouter");
 const adminRouter= require("./Routes/AdminRoute");
-const eventRouter= require("./Routes/AddEventRoute");
-const fetchRouter= require("./Routes/FetchEventRoute");
-const deleteRouter= require("./Routes/DeleteEventRoute");
-const updateRouter= require("./Routes/UpdateEventRoute");
+const eventRouter= require("./Routes/eventRoutes");
 const eveRegRouter= require("./Routes/EveRegRoute");
 const QuestionRoutes=require('./Routes/QuestionRoutes');
 const joinRoutes=require('./Routes/JoinRoutes');
@@ -52,10 +49,7 @@ mongoose
   app.use(express.json());
   
   app.use("/",adminRouter);
-  app.use("/",eventRouter);
-  app.use("/",fetchRouter);
-  app.use("/",deleteRouter);
-  app.use("/",updateRouter);
+  app.use("/", eventRouter);
   app.use("/",eveRegRouter);
   app.use("/",buzzRoutes);
   app.use("/",QuizRoutes);

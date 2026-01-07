@@ -3,8 +3,19 @@ const cloudinary = require("cloudinary").v2;
 const Evedetails = require("../model/AddEvent");
 
 function convertTo24Hour(time) {
+  if (!time || typeof time !== 'string') {
+    throw new Error('Invalid time format');
+  }
+  
   const [timePart, modifier] = time.split(" ");
+  if (!timePart || !modifier) {
+    throw new Error('Time must be in format "HH:MM AM/PM"');
+  }
+  
   let [hours, minutes] = timePart.split(":");
+  if (!hours || !minutes) {
+    throw new Error('Time must be in format "HH:MM AM/PM"');
+  }
 
   if (modifier === "PM" && hours !== "12") {
     hours = String(Number(hours) + 12);
@@ -15,81 +26,113 @@ function convertTo24Hour(time) {
   return `${hours}:${minutes}`;
 }
 
-// const startTime24 = convertTo24Hour(starttime);
-// const endTime24 = convertTo24Hour(endtime);
 
 const EventDetails = {
   add: asyncHandler(async (req, res) => {
-    try {
-      const {
-        eventname,
-        eventid,
-        startdate,
-        starttime,
-        enddate,
-        endtime,
-        venue,
-        description,
-        eligibility,
-      } = req.body;
+  try {
+    const {eventname,startdate,enddate,venue,description,schedules,eligibility,isTeam,teamSize,hasEntryFee,entryFee,} = req.body;
 
-      if (!starttime || !endtime) {
-        return res
-          .status(400)
-          .json({ message: "Start time and End time are required" });
-      }
-      if (!req.file || !req.file.path) {
-        return res.status(400).json({ message: "Image file is required" });
-      }
-
-      // Convert time format
-      const starttime24 = convertTo24Hour(starttime);
-      const endtime24 = convertTo24Hour(endtime);
-
-      // Cloudinary Upload Result
-      const imageUrl = req.file.path || req.file.url;
-      const publicId = req.file.filename || req.file.public_id;
-
-      // Create new event
-      const newEvent = new Evedetails({
-        eventname,
-        eventid,
-        startdate,
-        starttime: starttime24,
-        enddate,
-        endtime: endtime24,
-        venue,
-        description,
-        eligibility,
-        image: {
-          url: imageUrl,
-          public_id: publicId,
-        },
-      });
-
-      await newEvent.save();
-
-      res
-        .status(201)
-        .json({ message: "Event added successfully", event: newEvent });
-    } catch (error) {
-      console.error(error);
-      res
-        .status(500)
-        .json({ message: "Internal server error", error: error.message });
+    if (!eventname || !startdate || !enddate || !schedules) {
+      return res.status(400).json({ message: "Required fields missing" });
     }
+
+    const parsedSchedules = JSON.parse(schedules).map((s) => ({
+      date: new Date(s.date),
+      startTime: convertTo24Hour(s.startTime),
+      endTime: convertTo24Hour(s.endTime),
+    }));
+
+    if (parsedSchedules.length === 0) {
+      return res.status(400).json({ message: "At least one schedule required" });
+    }
+
+    const parsedEligibility =
+      typeof eligibility === "string" ? JSON.parse(eligibility) : eligibility;
+
+let parsedTeamSize = null;
+
+if (isTeam === "true" || isTeam === true) {
+  parsedTeamSize =
+    typeof teamSize === "string" ? JSON.parse(teamSize) : teamSize;
+
+  if (!parsedTeamSize?.min || !parsedTeamSize?.max) {
+    return res.status(400).json({
+      message: "Team size min & max required for team events",
+    });
+  }
+}
+    if ((hasEntryFee === "true" || hasEntryFee === true) && entryFee <= 0) {
+      return res
+        .status(400)
+        .json({ message: "Entry fee must be greater than 0" });
+    }
+    if (!req.files?.image?.[0]) {
+      return res.status(400).json({ message: "Event image required" });
+    }
+
+    const imageFile = req.files.image[0];
+
+    let qrImageData = null;
+    if (req.files?.qrImage?.[0]) {
+      const qr = req.files.qrImage[0];
+      qrImageData = {
+        url: qr.path,
+        public_id: qr.filename,
+      };
+    }
+
+    const newEvent = new Evedetails({
+      eventname,
+      startdate,
+      enddate,
+      venue,
+      description,
+      schedules: parsedSchedules,
+      eligibility: parsedEligibility,
+      isTeam: isTeam === "true" || isTeam === true,
+      teamSize: isTeam
+        ? { min: teamSize.min, max: teamSize.max }
+        : { min: 1, max: 1 },
+      hasEntryFee: hasEntryFee === "true" || hasEntryFee === true,
+      entryFee: hasEntryFee ? Number(entryFee) : 0,
+      image: {
+        url: imageFile.path,
+        public_id: imageFile.filename,
+      },
+      qrImage: qrImageData,
+    });
+
+    await newEvent.save();
+
+    res.status(201).json({
+      message: "Event added successfully",
+      event: newEvent,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
   }),
 
   fetch: asyncHandler(async (req, res) => {
     const storedEvents = await Evedetails.find();
     res.json(storedEvents);
   }),
+fetchById: asyncHandler(async (req, res) => {
+  const { eventid } = req.params;
+
+  const event = await Evedetails.findById(eventid);
+
+  if (!event) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  res.json(event);
+}),
 
   delete: asyncHandler(async (req, res) => {
     const { eventid } = req.params;
-
-    // Find the event in the database
-    const delEve = await Evedetails.findOne({ eventid });
+    const delEve = await Evedetails.findById(eventid);
     console.log("Event to be deleted:", delEve);
 
     if (!delEve) {
@@ -107,98 +150,76 @@ const EventDetails = {
     }
 
     // Delete the event from the database
-    await Evedetails.findByIdAndDelete(delEve._id);
+    await Evedetails.findByIdAndDelete(eventid);
 
     res.json({ message: "Event deleted successfully" });
   }),
 
   update: asyncHandler(async (req, res) => {
-    let { eventname } = req.params;
-    eventname = decodeURIComponent(eventname).trim();
+  const { eventid } = req.params;
+  const existingEvent = await Evedetails.findById(eventid);
 
-    console.log("Received update request for event:", eventname);
+  if (!existingEvent) {
+    return res.status(404).json({ message: "Event not found" });
+  }
 
-    // Parse data depending on request type
-    let requestBody;
-    if (req.is("application/json")) {
-      requestBody = req.body;
-    } else if (req.is("multipart/form-data")) {
-      requestBody = req.body;
-    } else {
-      return res.status(400).json({ message: "Invalid request format" });
+  let updates = { ...req.body };
+
+  /* 📅 Update schedules */
+  if (updates.schedules) {
+    const parsedSchedules = JSON.parse(updates.schedules).map((s) => ({
+      date: new Date(s.date),
+      startTime: convertTo24Hour(s.startTime),
+      endTime: convertTo24Hour(s.endTime),
+    }));
+    updates.schedules = parsedSchedules;
+  }
+
+  /* 🎓 Eligibility */
+  if (updates.eligibility) {
+    updates.eligibility =
+      typeof updates.eligibility === "string"
+        ? JSON.parse(updates.eligibility)
+        : updates.eligibility;
+  }
+
+  /* 👥 Team logic */
+  if (updates.isTeam === "false" || updates.isTeam === false) {
+    updates.teamSize = { min: 1, max: 1 };
+  }
+
+  /* 🖼️ Image update */
+  if (req.files?.image?.[0]) {
+    if (existingEvent.image?.public_id) {
+      await cloudinary.uploader.destroy(existingEvent.image.public_id);
     }
+    updates.image = {
+      url: req.files.image[0].path,
+      public_id: req.files.image[0].filename,
+    };
+  }
 
-    console.log("Request body:", requestBody);
-
-    const {
-      newEventName,
-      eligibility,
-      description,
-      startdate,
-      starttime,
-      enddate,
-      endtime,
-      venue,
-    } = requestBody;
-
-    const existingEvent = await Evedetails.findOne({ eventname });
-    if (!existingEvent) {
-      return res.status(404).json({ message: "Event not found" });
+  /* 💳 QR update */
+  if (req.files?.qrImage?.[0]) {
+    if (existingEvent.qrImage?.public_id) {
+      await cloudinary.uploader.destroy(existingEvent.qrImage.public_id);
     }
+    updates.qrImage = {
+      url: req.files.qrImage[0].path,
+      public_id: req.files.qrImage[0].filename,
+    };
+  }
 
-    if (newEventName && newEventName !== eventname) {
-      const nameExists = await Evedetails.findOne({ eventname: newEventName });
-      if (nameExists) {
-        return res.status(400).json({ message: "Event name already exists" });
-      }
-    }
+  const updatedEvent = await Evedetails.findByIdAndUpdate(
+    eventid,
+    updates,
+    { new: true }
+  );
 
-    let updatedImage = existingEvent.image;
-    if (req.file && req.file.path) {
-      try {
-        // Delete old image from Cloudinary
-        if (existingEvent.image && existingEvent.image.public_id) {
-          await cloudinary.uploader.destroy(existingEvent.image.public_id);
-        }
-
-        // Save new image details
-        updatedImage = {
-          url: req.file.path || req.file.url,
-          public_id: req.file.filename || req.file.public_id,
-        };
-      } catch (error) {
-        console.error("Error updating image:", error);
-        return res
-          .status(500)
-          .json({ message: "Failed to update event image" });
-      }
-    }
-
-    // Update event details
-    const updateEvent = await Evedetails.findByIdAndUpdate(
-      existingEvent._id,
-      {
-        eventname: newEventName || existingEvent.eventname,
-        eligibility: eligibility || existingEvent.eligibility,
-        description: description || existingEvent.description,
-        startdate: startdate || existingEvent.startdate,
-        starttime: starttime || existingEvent.starttime,
-        enddate: enddate || existingEvent.enddate,
-        endtime: endtime || existingEvent.endtime,
-        venue: venue || existingEvent.venue,
-        image: updatedImage,
-      },
-      { new: true }
-    );
-
-    if (!updateEvent) {
-      return res.status(500).json({ message: "Failed to update event" });
-    }
-
-    res.json({
-      message: "Event updated successfully",
-      updatedEvent: updateEvent,
-    });
-  }),
+  res.json({
+    message: "Event updated successfully",
+    updatedEvent,
+  });
+}),
 };
 module.exports = EventDetails;

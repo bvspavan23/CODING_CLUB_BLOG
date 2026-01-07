@@ -4,5 +4,6 @@ const eveRegRouter = express.Router();
 // !Register
 eveRegRouter.post("/api/v1/student/reg", eveRegs.register);
 eveRegRouter.get("/api/v1/students", eveRegs.fetch);
+eveRegRouter.get("/api/events/details/:eventid", eveRegs.getEventDetails);
 
 module.exports = eveRegRouter;
