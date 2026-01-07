@@ -21,7 +21,7 @@ const PublicEveCard = ({ id:eventid, title:eventname,poster}) => {
     return (
         <div className="event-container">
         <div className="event-card">
-            <span>{eventid}.</span>
+            {/* <span>{eventid}.</span> */}
             <img src={poster} alt="Event Poster" className="event-image"/>
             <div className="event-content">
                 <h3>{eventname}</h3>

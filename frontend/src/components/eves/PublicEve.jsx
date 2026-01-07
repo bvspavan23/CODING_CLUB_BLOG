@@ -25,7 +25,7 @@ const PublicEve = () => {
                     {clubEves.map(obj => (
                         <PublicEveCard
                             key={obj.eventid}
-                            id={obj.eventid}
+                            id={obj._id}
                             title={obj.eventname}
                             poster={obj.image.url}
                         />

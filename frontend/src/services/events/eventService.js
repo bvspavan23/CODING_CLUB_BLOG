@@ -4,16 +4,20 @@ import { getUserFromStorage } from "../../utils/getUserFromStorage";
 
 const token = getUserFromStorage();
 
-export const EventAPI = async (formData) => {
-  const response = await axios.post(`${BASE_URL}/edit/addeve`, formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const createEventAPI = async (formData) => {
+  const response = await axios.post(
+    `${BASE_URL}/events`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-  // Return a promise
   return response.data;
 };
+
 export const registerEventAPI = async (formData) => {
   const response = await axios.post(`${BASE_URL}/student/reg`, formData,{
     headers: {
@@ -33,19 +37,24 @@ export const deleteEventAPI = async (id) => {
   // Return a promise
   return response.data;
 };
+export const updateEventAPI = async (eventid, formData) => {
+  if (!eventid) {
+    throw new Error("Event ID is required for update");
+  }
 
-
-export const updateEventAPI = async (eventname, formData) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/events/${encodeURIComponent(eventname)}`, formData, {
+  const response = await axios.patch(
+    `${BASE_URL}/events/${eventid}`,
+    formData,
+    {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error in updateEventAPI:", error);
-    throw error;
-  }
+    }
+  );
+
+  return response.data;
+};
+export const getEventByIdAPI = async (eventid) => {
+  const response = await axios.get(`${BASE_URL}/events/${eventid}`);
+  return response.data;
 };

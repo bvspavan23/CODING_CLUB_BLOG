@@ -31,7 +31,7 @@ const Eve = ({ id, title, poster }) => {
   return (
     <div className="event-container">
       <div className="event-card">
-        <span>{id}.</span>
+        {/* <span>{id}.</span> */}
         <img src={poster} alt="Event Poster" className="event-image" />
         <div className="event-content">
           <h3>{title}</h3>

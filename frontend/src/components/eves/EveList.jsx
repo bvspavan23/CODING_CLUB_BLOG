@@ -11,8 +11,8 @@ const EveList = () => {
       {eveList && eveList.length > 0 ? (
         eveList.map((item) => (
           <Eve
-            key={item.eventid}
-            id={item.eventid}
+            key={item._id}
+            id={item._id}
             title={item.eventname}
             poster={item.image.url}
           />
